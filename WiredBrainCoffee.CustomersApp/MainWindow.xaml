@@ -12,7 +12,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Margin="10"
-                Click="ButtonAddCustomer_Click"></Button>
+                Click="ButtonAddCustomer_Click"/>
 
     </Grid>
 </Window>
