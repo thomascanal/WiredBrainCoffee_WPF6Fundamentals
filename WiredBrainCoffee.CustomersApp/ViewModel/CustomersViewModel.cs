@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using WiredBrainCoffee.CustomersApp.Command;
 using WiredBrainCoffee.CustomersApp.Data;
 using WiredBrainCoffee.CustomersApp.Model;
 
@@ -15,6 +16,8 @@ namespace WiredBrainCoffee.CustomersApp.ViewModel
         public CustomersViewModel(ICustomerDataProvider customerDataProvider)
         {
             _customerDataProvider = customerDataProvider;
+            AddCommand = new DelegateCommand(Add);
+            MoveNavigationCommand = new DelegateCommand(MoveNavigation);
         }
 
         public ObservableCollection<CustomerItemViewModel> Customers { get; } = new();
@@ -39,6 +42,10 @@ namespace WiredBrainCoffee.CustomersApp.ViewModel
             }
         }
 
+        public DelegateCommand AddCommand { get; }
+        
+        public DelegateCommand MoveNavigationCommand { get; }
+
         public async Task LoadAsync()
         {
             if (Customers.Any())
@@ -56,7 +63,7 @@ namespace WiredBrainCoffee.CustomersApp.ViewModel
             }
         }
 
-        internal void Add()
+        private void Add(object? parameter)
         {
             var customer = new Customer { FirstName = "New" };
             var viewModel = new CustomerItemViewModel(customer);
@@ -64,7 +71,7 @@ namespace WiredBrainCoffee.CustomersApp.ViewModel
             SelectedCustomer = viewModel;
         }
 
-        internal void MoveNavigation()
+        private void MoveNavigation(object? parameter)
         {
             NavigationSide = NavigationSide == NavigationSide.Left
                 ? NavigationSide.Right
