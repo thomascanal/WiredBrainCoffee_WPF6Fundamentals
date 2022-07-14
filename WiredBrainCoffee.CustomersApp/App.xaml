@@ -3,8 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <SolidColorBrush x:Key="HeaderBackgroundBrush" Color="#F05A28"/>
-        <SolidColorBrush x:Key="HeaderForegroundBrush" Color="White"/>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConv"/>
+        <ResourceDictionary Source="/Resources/Brushes.xaml"/>
     </Application.Resources>
 </Application>
