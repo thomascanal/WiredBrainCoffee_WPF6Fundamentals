@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using WiredBrainCoffee.CustomersApp.Command;
 
 namespace WiredBrainCoffee.CustomersApp.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
         private ViewModelBase? _selectedViewModel;
-        private CustomersViewModel _customersViewModel;
-        private ProductsViewModel _productsViewModel;
 
         public MainViewModel(CustomersViewModel customersViewModel,
             ProductsViewModel productsViewModel)
         {
-            _customersViewModel = customersViewModel;
-            _productsViewModel = productsViewModel;
-            SelectedViewModel = _customersViewModel;
+            CustomersViewModel = customersViewModel;
+            ProductsViewModel = productsViewModel;
+            SelectedViewModel = CustomersViewModel;
+            SelectViewModelCommand = new DelegateCommand(SelectViewModel);
         }
+
         public ViewModelBase? SelectedViewModel
         {
             get => _selectedViewModel;
@@ -29,12 +26,24 @@ namespace WiredBrainCoffee.CustomersApp.ViewModel
             }
         }
 
+        public CustomersViewModel CustomersViewModel { get; }
+
+        public ProductsViewModel ProductsViewModel { get; }
+
+        public DelegateCommand SelectViewModelCommand { get; }
+
         public async override Task LoadAsync()
         {
             if (SelectedViewModel is not null)
             {
                 await SelectedViewModel.LoadAsync();
             }
+        }
+
+        private async void SelectViewModel(object? parameter)
+        {
+            SelectedViewModel = parameter as ViewModelBase;
+            await LoadAsync();
         }
     }
 }
