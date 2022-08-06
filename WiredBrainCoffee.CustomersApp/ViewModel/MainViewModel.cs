@@ -10,10 +10,13 @@ namespace WiredBrainCoffee.CustomersApp.ViewModel
     {
         private ViewModelBase? _selectedViewModel;
         private CustomersViewModel _customersViewModel;
+        private ProductsViewModel _productsViewModel;
 
-        public MainViewModel(CustomersViewModel customersViewModel)
+        public MainViewModel(CustomersViewModel customersViewModel,
+            ProductsViewModel productsViewModel)
         {
             _customersViewModel = customersViewModel;
+            _productsViewModel = productsViewModel;
             SelectedViewModel = _customersViewModel;
         }
         public ViewModelBase? SelectedViewModel
