@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace WiredBrainCoffee.CustomersApp.ViewModel
 {
@@ -26,8 +27,11 @@ namespace WiredBrainCoffee.CustomersApp.ViewModel
             ErrorsChanged?.Invoke(this, e);
         }
 
-        protected void AddError(string error, string propertyName)
+        protected void AddError(string error, 
+            [CallerMemberName] string? propertyName = null)
         {
+            if (propertyName is null) return;
+
             if (!_errorsByPropertyName.ContainsKey(propertyName))
             {
                 _errorsByPropertyName[propertyName] = new List<string>();
@@ -40,8 +44,10 @@ namespace WiredBrainCoffee.CustomersApp.ViewModel
             }
         }
 
-        protected void ClearErrors(string propertyName)
+        protected void ClearErrors([CallerMemberName] string? propertyName = null)
         {
+            if (propertyName is null) return;
+
             if (_errorsByPropertyName.ContainsKey(propertyName))
             {
                 _errorsByPropertyName.Remove(propertyName);
